@@ -60,8 +60,8 @@ $form.addEventListener("submit", (e) => {
     editUser = false;
   }
 
-  renderList();
   $form.reset();
+  renderList();
 });
 
 document.addEventListener("click", (e) => {
@@ -69,19 +69,20 @@ document.addEventListener("click", (e) => {
   if (e.target.matches("#edit") || e.target.matches("#edit *")) {
     editUser = true;
     $title.textContent = "Editar Usuario";
-    let parent = e.target.closest(".table-user");
+    let userTable = e.target.closest(".table-user");
 
-    indexEditUser = parent.dataset.id;
-    $form.firstName.value = parent.querySelector("#firstName").textContent;
-    $form.lastName.value = parent.querySelector("#lastName").textContent;
-    $form.email.value = parent.querySelector("#email").textContent;
+    indexEditUser = userTable.dataset.id;
+    $form.firstName.value = userTable.querySelector("#firstName").textContent;
+    $form.lastName.value = userTable.querySelector("#lastName").textContent;
+    $form.email.value = userTable.querySelector("#email").textContent;
   }
 
   //   Eliminamos el Usuario
   if (e.target.matches("#delete") || e.target.matches("#delete *")) {
-    let indexArray = e.target.closest(".table-user").dataset.id;
-    usersArray.splice(indexArray, 1);
-
+    let tableUser = e.target.closest(".table-user"),
+        indexUser = tableUser.dataset.id;
+    
+    usersArray.splice(indexUser, 1);
     renderList();
   }
 });
