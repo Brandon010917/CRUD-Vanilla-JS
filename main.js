@@ -65,6 +65,7 @@ const formSubmit = (e) => {
     btnSubmit.textContent = "Agregar Carro";
     indexCarEdit = null;
 
+    editCar = false;
     renderCars();
   } else {
     let newCar = car;
