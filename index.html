@@ -27,92 +27,117 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body class="bg-dark text-white">
-    <div class="container">
+    <div class="container mb-5">
       <h1 class="text-light text-center py-5">CRUD VANILLA JS</h1>
 
-      <!-- Dividimos en 2 el layout -->
-      <div class="row">
-        <div class="col-12 col-lg-4 mb-4">
-          <h2 class="mb-4 title">Agregar Persona</h2>
-          <form id="form">
-            <div class="form-group position-relative">
-              <label for="firstName">Nombre:</label>
-              <input
-                id="firstName"
-                class="form-control ps-5 mt-1"
-                type="text"
-                name="firstName"
-                placeholder="Ingresa tu Nombre"
-                required
-                title="Solo debe ingresar letras y espacios en blanco"
-                pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
-              />
-              <i class="fas fa-user text-secondary icon-input"></i>
-            </div>
-            <div class="form-group mt-3 position-relative">
-              <label for="lastName">Apellido </label>
-              <input
-                id="lastName"
-                class="form-control ps-5 mt-1"
-                type="text"
-                name="lastName"
-                placeholder="Ingresa tu Apellido"
-                required
-                title="Solo debe ingresar letras y espacios en blanco"
-                pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
-              />
-              <i class="fas fa-user text-secondary icon-input"></i>
-            </div>
-            <div class="form-group mt-3 position-relative">
-              <label for="email">Email:</label>
-              <input
-                id="email"
-                class="form-control ps-5 mt-1"
-                type="email"
-                name="email"
-                placeholder="Ingresa tu Correo"
-                required
-                pattern="^[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?$"
-                title="Debes ingresar un correo valido"
-              />
-              <i class="fas fa-envelope text-secondary icon-input"></i>
-            </div>
-            <div class="form-group mt-4">
-              <button
-                class="btn btn-success btn-lg px-5"
-                id="btnSubmit"
-                type="submit"
-              >
-                Agregar
-              </button>
-            </div>
-          </form>
-        </div>
-        <div class="col-12 col-lg-8 ps-lg-5">
-          <div class="table text-white mb-0">
-            <div class="row text-center rounded bg-secondary">
-              <div class="col-lg-3 p-2 fs-5 fw-bold">Nombre</div>
-              <div class="col-lg-3 p-2 fs-5 fw-bold">Apellido</div>
-              <div class="col-lg-3 p-2 fs-5 fw-bold">Correo</div>
-              <div class="col-lg-3 p-2 fs-5 fw-bold">Accion</div>
-            </div>
+      <div class="col-12 ps-lg-5">
+        <div class="table text-white mb-0">
+          <div class="row text-center rounded bg-secondary">
+            <div class="col-2 p-2 fs-5 fw-bold">Marca</div>
+            <div class="col-2 p-2 fs-5 fw-bold">Nombre</div>
+            <div class="col-2 p-2 fs-5 fw-bold">Modelo</div>
+            <div class="col-2 p-2 fs-5 fw-bold">Color</div>
+            <div class="col-2 p-2 fs-5 fw-bold">Nº Puertas</div>
+            <div class="col-2 p-2 fs-5 fw-bold">Accion</div>
           </div>
-          <div class="table-users"></div>
         </div>
+        <div class="table-cars"></div>
+      </div>
+
+      <div class="col-12 mt-5">
+        <h2 class="mb-4 title text-center">Agregar Carro</h2>
+        <form class="form" id="form">
+          <div class="form-group">
+            <label for="marca">Marca:</label>
+            <input
+              id="marca"
+              class="form-control mt-1"
+              type="text"
+              name="marca"
+              placeholder="Ingresa la Marca"
+              required
+              title="Solo debe ingresar letras, numeros y espacios en blanco"
+              pattern="^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\s]+$"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="nombre">Nombre:</label>
+            <input
+              id="nombre"
+              class="form-control mt-1"
+              type="text"
+              name="nombre"
+              placeholder="Ingresa el Nombre"
+              required
+              title="Solo debe ingresar letras, numeros y espacios en blanco"
+              pattern="^[A-Za-z0-9ÑñÁáÉéÍíÓóÚúÜü\s]+$"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="email">Modelo:</label>
+            <input
+              id="email"
+              class="form-control mt-1"
+              type="text"
+              name="modelo"
+              placeholder="Ingresa el Modelo"
+              required
+              title="Debes ingresar un Modelo"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="color">Color:</label>
+            <input
+              id="color"
+              class="form-control mt-1"
+              type="text"
+              name="color"
+              placeholder="Ingresa el Color"
+              required
+              title="Solo debe ingresar letras y espacios en blanco"
+              pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+            />
+          </div>
+          <div class="form-group mt-3">
+            <label for="puertas">Nº Puertas:</label>
+            <input
+              id="puertas"
+              class="form-control mt-1"
+              type="number"
+              name="puertas"
+              placeholder="Ingresa el Nº de Puertas"
+              required
+              title="Solo debe ingresar letras y espacios en blanco"
+              pattern="^[A-Za-zÑñÁáÉéÍíÓóÚúÜü\s]+$"
+            />
+          </div>
+          <div class="form-group mt-4 text-center">
+            <button
+              class="btn btn-success btn-lg px-5"
+              id="btnSubmit"
+              type="submit"
+            >
+              Agregar Carro
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
     <!-- Template para pintar los Datos -->
-    <template id="template-user">
-      <div class="row text-center border-bottom py-2 table-user">
-        <div class="col-lg-3 p-2 lh-lg" id="firstName"></div>
-        <div class="col-lg-3 p-2 lh-lg" id="lastName"></div>
-        <div class="col-lg-3 p-2 lh-lg" id="email"></div>
-        <div class="col-lg-3 p-2">
-          <button class="btn bg-warning" id="edit">
+    <template id="template-car">
+      <div class="row text-center border-bottom py-2 table-car">
+        <div class="col-md-2 p-2 lh-lg" id="marca"></div>
+        <div class="col-md-2 p-2 lh-lg" id="nombre"></div>
+        <div class="col-md-2 p-2 lh-lg" id="modelo"></div>
+        <div class="col-md-2 p-2 lh-lg" id="color"></div>
+        <div class="col-md-2 p-2 lh-lg" id="puertas"></div>
+
+        <div class="col-md-2 p-2">
+          <button class="btn bg-warning" id="editar">
             <i class="fas fa-edit text-white fs-5 icon-accion"></i>
           </button>
-          <button class="btn bg-danger" id="delete">
+          <button class="btn bg-danger mt-md-1 mt-lg-0" id="eliminar">
             <i class="fas fa-trash-alt text-white fs-5 icon-accion"></i>
           </button>
         </div>

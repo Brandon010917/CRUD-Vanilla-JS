@@ -2,89 +2,107 @@
 const btnSubmit = document.getElementById("btnSubmit"),
   $title = document.querySelector(".title"),
   $form = document.getElementById("form"),
-  $table = document.querySelector(".table-users"),
-  $template = document.getElementById("template-user").content,
+  $table = document.querySelector(".table-cars"),
+  $template = document.getElementById("template-car").content,
   $fragment = document.createDocumentFragment();
 
-let editUser = false;
-let indexEditUser = 0;
+let editCar = false;
+let indexCarEdit = null;
 
-if (localStorage.getItem("users") === null) {
-  localStorage.setItem("users", JSON.stringify([]));
+if (typeof localStorage === null) {
+  alert("Su Navegador no acepta localStorage");
+} else {
+  if (localStorage.getItem("cars") === null) {
+    localStorage.setItem("cars", JSON.stringify([]));
+  }
 }
 
-const usersArray = JSON.parse(localStorage.getItem("users"));
+let arrayCars = JSON.parse(localStorage.getItem("cars"));
 
-const renderList = () => {
-  $table.innerHTML = "";
+// Editar o Eliminar un Carro de la Tabla
+document.addEventListener("click", (e) => {
+  if (e.target.matches("#editar") || e.target.matches("#editar *")) {
+    let btnEdit = e.target.closest("#editar");
+    $form.marca.value = btnEdit.dataset.marca;
+    $form.nombre.value = btnEdit.dataset.nombre;
+    $form.modelo.value = btnEdit.dataset.modelo;
+    $form.color.value = btnEdit.dataset.color;
+    $form.puertas.value = btnEdit.dataset.puertas;
 
-  usersArray.forEach((user, index) => {
-    $template.querySelector(".table-user").dataset.id = index;
-    $template.querySelector("#firstName").textContent = user.name;
-    $template.querySelector("#lastName").textContent = user.lastName;
-    $template.querySelector("#email").textContent = user.email;
+    $title.textContent = "Editar Carro";
+    btnSubmit.textContent = "Editar Carro";
+
+    indexCarEdit = btnEdit.dataset.id;
+    editCar = true;
+  }
+
+  if (e.target.matches("#eliminar") || e.target.matches("#eliminar *")) {
+    let userIndex = e.target.closest("#eliminar"),
+      userIndexDelete = userIndex.dataset.id;
+
+    arrayCars.splice(userIndexDelete, 1);
+    renderCars();
+  }
+});
+
+// Agregar un Carro o Editar uno Existente
+const formSubmit = (e) => {
+  e.preventDefault();
+
+  let car = {
+    name: $form.nombre.value,
+    model: $form.modelo.value,
+    doors: $form.puertas.value,
+    color: $form.color.value,
+    brand: $form.marca.value,
+  };
+  // Comprobamos si queremos editar un Carro o Agregar uno nuevo
+  if (editCar) {
+    let editedCar = car;
+    arrayCars[indexCarEdit] = editedCar;
+
+    $title.textContent = "Agregar Carro";
+    btnSubmit.textContent = "Agregar Carro";
+    indexCarEdit = null;
+
+    renderCars();
+  } else {
+    let newCar = car;
+    arrayCars = [...arrayCars, newCar];
+    renderCars();
+  }
+};
+
+const renderCars = () => {
+  localStorage.setItem("cars", JSON.stringify(arrayCars));
+
+  arrayCars.forEach((car, index) => {
+    $template.getElementById("marca").textContent = car.brand;
+    $template.getElementById("nombre").textContent = car.name;
+    $template.getElementById("modelo").textContent = car.model;
+    $template.getElementById("color").textContent = car.color;
+    $template.getElementById("puertas").textContent = car.doors;
+
+    // Agregamos los Datos al Boton de Editar
+    $template.getElementById("editar").dataset.id = index;
+    $template.getElementById("editar").dataset.marca = car.brand;
+    $template.getElementById("editar").dataset.nombre = car.name;
+    $template.getElementById("editar").dataset.modelo = car.model;
+    $template.getElementById("editar").dataset.color = car.color;
+    $template.getElementById("editar").dataset.puertas = car.doors;
+
+    // Agregamos un ID al boton de Eliminar
+    $template.getElementById("eliminar").dataset.id = index;
 
     const $clone = document.importNode($template, true);
 
     $fragment.appendChild($clone);
   });
-  $table.appendChild($fragment);
-
-  localStorage.setItem("users", JSON.stringify(usersArray));
-};
-
-$form.addEventListener("submit", (e) => {
-  e.preventDefault();
-
-  //   Agregar un Nuevo Usuario
-  if (!editUser) {
-    let newUser = {
-      name: $form.firstName.value,
-      lastName: $form.lastName.value,
-      email: $form.email.value,
-    };
-
-    usersArray.push(newUser);
-  } else {
-    //   Editar un Usuario
-    let editedUser = {
-      name: $form.firstName.value,
-      lastName: $form.lastName.value,
-      email: $form.email.value,
-    };
-
-    // usersArray.splice(indexEditUser, 1, editedUser);
-    usersArray[indexEditUser] = editedUser;
-
-    $title.textContent = "Agregar Usuario";
-    editUser = false;
-  }
 
   $form.reset();
-  renderList();
-});
+  $table.innerHTML = "";
+  $table.appendChild($fragment);
+};
 
-document.addEventListener("click", (e) => {
-  // Editar Usuario
-  if (e.target.matches("#edit") || e.target.matches("#edit *")) {
-    editUser = true;
-    $title.textContent = "Editar Usuario";
-    let userTable = e.target.closest(".table-user");
-
-    indexEditUser = userTable.dataset.id;
-    $form.firstName.value = userTable.querySelector("#firstName").textContent;
-    $form.lastName.value = userTable.querySelector("#lastName").textContent;
-    $form.email.value = userTable.querySelector("#email").textContent;
-  }
-
-  //   Eliminamos el Usuario
-  if (e.target.matches("#delete") || e.target.matches("#delete *")) {
-    let tableUser = e.target.closest(".table-user"),
-        indexUser = tableUser.dataset.id;
-    
-    usersArray.splice(indexUser, 1);
-    renderList();
-  }
-});
-
-document.addEventListener("DOMContentLoaded", renderList);
+$form.addEventListener("submit", formSubmit);
+document.addEventListener("DOMContentLoaded", renderCars);

@@ -1,15 +1,9 @@
-.icon-input {
-  position: absolute;
-  bottom: 6px;
-  left: 12px;
-  width: 24px;
-  height: 24px;
-  color: #444444;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .icon-accion {
   width: 24px;
+}
+
+.form {
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
 }
